@@ -12,16 +12,20 @@ import {
 // Custom Components
 import Card from '../components/Card'
 import Input from '../components/Input'
-import OutputResult from '../components/OutputResult'
+import NumberContainer from '../components/NumberContainer'
 
 // Theme
 import { colors } from '../styles/theme'
 
-const StartGameScreen = () => {
+interface PropTypes {
+  setUserNumber: (number: number) => void
+  number: number | null
+}
+
+const StartGameScreen = ({ number, setUserNumber }: PropTypes) => {
   // State
   const [inputValue, setInputValue] = useState('')
-  const [selectedNumber, setSelectedNumber] =
-    useState<React.SetStateAction<number>>()
+  const [selectedNumber, setSelectedNumber] = useState<number>()
   const [isConfirmed, setIsConfirmed] = useState(false)
 
   // Events Handling
@@ -54,7 +58,16 @@ const StartGameScreen = () => {
   let resultOutput
 
   if (isConfirmed) {
-    resultOutput = <OutputResult number={selectedNumber!} />
+    resultOutput = (
+      <Card style={styles.resultContainer}>
+        <Text>You've selected</Text>
+        <NumberContainer number={selectedNumber!} />
+        <Button
+          title='Start Game'
+          onPress={() => setUserNumber(selectedNumber!)}
+        />
+      </Card>
+    )
   }
 
   return (
@@ -124,6 +137,11 @@ const styles = StyleSheet.create({
   },
   formButton: {
     width: 100,
+  },
+  resultContainer: {
+    alignItems: 'center',
+    maxWidth: '50%',
+    width: 200,
   },
 })
 

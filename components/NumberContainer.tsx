@@ -7,27 +7,18 @@ import Card from './Card'
 
 // Interfaces
 interface PropTypes {
-  number: SetStateAction<number>
+  number: number | null
 }
 
-const OutputResult = ({ number }: PropTypes) => {
+const NumberContainer = ({ number }: PropTypes) => {
   return (
-    <Card style={styles.resultContainer}>
-      <Text>You've selected</Text>
-      <View style={styles.numberContainer}>
-        <Text style={styles.numberText}>{number}</Text>
-      </View>
-      <Button title='Start Game' onPress={() => {}} />
-    </Card>
+    <View style={styles.numberContainer}>
+      <Text style={styles.numberText}>{number && number}</Text>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-  resultContainer: {
-    alignItems: 'center',
-    maxWidth: '50%',
-    width: 200,
-  },
   numberContainer: {
     borderWidth: 1,
     borderColor: colors.secondary,
@@ -41,4 +32,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default OutputResult
+export default NumberContainer
