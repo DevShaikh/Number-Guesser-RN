@@ -1,5 +1,6 @@
 import React, { SetStateAction } from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View } from 'react-native'
+import Card from '../components/Card'
 
 interface PropTypes {
   setIsGameOver: React.Dispatch<SetStateAction<boolean>>
@@ -21,12 +22,31 @@ const GameOverScreen = ({
   }
 
   return (
-    <View>
-      <Text>Rounds Count: {totalRounds}</Text>
-      <Text>Game Over!</Text>
-      <Button title='Restart' onPress={gameRestartHandler} />
-    </View>
+    <Card style={styles.screen}>
+      <Text style={styles.title}>Game Over!</Text>
+      <View style={{ alignItems: 'center' }}>
+        <Text>Rounds Count</Text>
+        <Text>{totalRounds}</Text>
+      </View>
+
+      <Button title='New Game' onPress={gameRestartHandler} />
+    </Card>
   )
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 18,
+    textTransform: 'uppercase',
+  },
+  screen: {
+    maxWidth: '80%',
+    width: 200,
+    paddingVertical: 10,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexBasis: 140,
+  },
+})
 
 export default GameOverScreen
