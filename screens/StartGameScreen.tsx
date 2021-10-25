@@ -1,8 +1,7 @@
-import React, { FC, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import {
   StyleSheet,
   View,
-  Text,
   Button,
   Keyboard,
   TouchableWithoutFeedback,
@@ -13,6 +12,8 @@ import {
 import Card from '../components/Card'
 import Input from '../components/Input'
 import NumberContainer from '../components/NumberContainer'
+import Heading from '../styles/Heading'
+import Text from '../styles/Text'
 
 // Theme
 import { colors } from '../styles/theme'
@@ -73,7 +74,7 @@ const StartGameScreen = ({ number, setUserNumber }: PropTypes) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.screen}>
-        <Text style={styles.screenTitle}>Let's Play The Game!</Text>
+        <Heading>Let's Play The Game!</Heading>
         <Card style={styles.inputContainer}>
           <Text>Enter a Number!</Text>
           <Input
@@ -116,9 +117,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 20,
     alignItems: 'center',
-  },
-  screenTitle: {
-    fontSize: 24,
   },
   inputContainer: {
     maxWidth: '80%',

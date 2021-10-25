@@ -5,7 +5,9 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Alert, Button, StyleSheet, Text, View } from 'react-native'
+import { Alert, Button, StyleSheet, View } from 'react-native'
+
+import Text from '../styles/Text'
 import Card from '../components/Card'
 import NumberContainer from '../components/NumberContainer'
 

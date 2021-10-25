@@ -1,5 +1,7 @@
 import React, { SetStateAction } from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, View } from 'react-native'
+
+import Text from '../styles/Text'
 import Card from '../components/Card'
 import NumberContainer from '../components/NumberContainer'
 
@@ -27,7 +29,10 @@ const GameOverScreen = ({
   return (
     <Card style={styles.screen}>
       <Text style={styles.title}>Game Over!</Text>
-      <NumberContainer number={userNumber} />
+      <View style={{ alignItems: 'center' }}>
+        <Text>Number Was</Text>
+        <NumberContainer number={userNumber} />
+      </View>
       <View style={{ alignItems: 'center' }}>
         <Text>Rounds Count</Text>
         <Text>{totalRounds}</Text>
@@ -46,10 +51,10 @@ const styles = StyleSheet.create({
   screen: {
     maxWidth: '80%',
     width: 200,
-    paddingVertical: 10,
+    paddingVertical: 20,
     justifyContent: 'space-around',
     alignItems: 'center',
-    flexBasis: 140,
+    flexBasis: 250,
   },
 })
 
