@@ -8,12 +8,44 @@ import { StyleSheet, Text, View } from 'react-native'
 import Header from './components/Header'
 import StartGameScreen from './screens/StartGameScreen'
 import RunningGameScreen from './screens/RunningGameScreen'
+import GameOverScreen from './screens/GameOverScreen'
 
 const App = () => {
   const [userNumber, setUserNumber] = useState<number | null>(null)
+  const [totalRounds, setTotalRounds] = useState<number>(0)
+  const [isGameOver, setIsGameOver] = useState<boolean>(false)
 
-  const startGameHandler = (number: number) => {
+  const startGameHandler = (number: number | null) => {
     setUserNumber(number)
+  }
+
+  const Screens = () => {
+    if (!userNumber && !isGameOver) {
+      return (
+        <StartGameScreen number={userNumber} setUserNumber={startGameHandler} />
+      )
+    }
+    if (userNumber && !isGameOver) {
+      return (
+        <RunningGameScreen
+          userNumber={userNumber}
+          setUserNumber={startGameHandler}
+          setIsGameOver={setIsGameOver}
+          setTotalRounds={setTotalRounds}
+          totalRounds={totalRounds}
+        />
+      )
+    }
+    if (isGameOver) {
+      return (
+        <GameOverScreen
+          setUserNumber={startGameHandler}
+          setIsGameOver={setIsGameOver}
+          setTotalRounds={setTotalRounds}
+          totalRounds={totalRounds}
+        />
+      )
+    }
   }
 
   return (
@@ -21,18 +53,7 @@ const App = () => {
     <View style={styles.container}>
       <StatusBar style='inverted' backgroundColor='#00000055' />
       <Header title='Number Guesser' />
-      {!userNumber && (
-        <StartGameScreen
-          number={userNumber}
-          setUserNumber={startGameHandler!}
-        />
-      )}
-      {userNumber && (
-        <RunningGameScreen
-          number={userNumber}
-          setUserNumber={startGameHandler!}
-        />
-      )}
+      {Screens()}
     </View>
   )
 }
