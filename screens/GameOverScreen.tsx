@@ -1,12 +1,14 @@
 import React, { SetStateAction } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import Card from '../components/Card'
+import NumberContainer from '../components/NumberContainer'
 
 interface PropTypes {
   setIsGameOver: React.Dispatch<SetStateAction<boolean>>
   setTotalRounds: React.Dispatch<SetStateAction<number>>
   setUserNumber: (number: number | null) => void
   totalRounds: number
+  userNumber: number | null
 }
 
 const GameOverScreen = ({
@@ -14,6 +16,7 @@ const GameOverScreen = ({
   setTotalRounds,
   setUserNumber,
   totalRounds,
+  userNumber,
 }: PropTypes) => {
   const gameRestartHandler = () => {
     setUserNumber(null)
@@ -24,6 +27,7 @@ const GameOverScreen = ({
   return (
     <Card style={styles.screen}>
       <Text style={styles.title}>Game Over!</Text>
+      <NumberContainer number={userNumber} />
       <View style={{ alignItems: 'center' }}>
         <Text>Rounds Count</Text>
         <Text>{totalRounds}</Text>

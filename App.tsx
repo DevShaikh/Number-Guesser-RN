@@ -42,6 +42,7 @@ const App = () => {
       return (
         <GameOverScreen
           setUserNumber={startGameHandler}
+          userNumber={userNumber}
           setIsGameOver={setIsGameOver}
           setTotalRounds={setTotalRounds}
           totalRounds={totalRounds}
