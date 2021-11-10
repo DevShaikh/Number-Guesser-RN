@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 // Expo
+import * as Font from 'expo-font'
 
 // React Native
 import { StatusBar } from 'expo-status-bar'
@@ -11,23 +12,25 @@ import Header from './components/Header'
 import StartGameScreen from './screens/StartGameScreen'
 import RunningGameScreen from './screens/RunningGameScreen'
 import GameOverScreen from './screens/GameOverScreen'
-import { loadAsync } from 'expo-font'
+import AppLoading from 'expo-app-loading'
+
+const fetchFonts = async () =>
+  await Font.loadAsync({
+    GemunuLibre: require('./assets/Fonts/GemunuLibre-Regular.ttf'),
+    'GemunuLibre-Bold': require('./assets/Fonts/GemunuLibre-Bold.ttf'),
+  })
+
+// const fetchFonts = () => {
+
+//     const cacheImages = images.map(image => {
+//       return Asset.fromModule(image).downloadAsync();
+//     });
+//     return Promise.all(cacheImages);
+// }
 
 const App = () => {
-  const [loaded, setLoaded] = useState(false)
-
-  const fetchFonts = async () => {
-    await loadAsync({
-      GemunuLibre: require('./assets/Fonts/GemunuLibre-Regular.ttf'),
-      'GemunuLibre-Bold': require('./assets/Fonts/GemunuLibre-Bold.ttf'),
-    })
-    setLoaded(true)
-  }
-
-  useEffect(() => {
-    fetchFonts()
-  }, [])
-
+  const [isReady, setIsReady] = useState(false)
+  const [pastGuesses, setPastGuesses] = useState<number[]>([])
   const [userNumber, setUserNumber] = useState<number | null>(null)
   const [totalRounds, setTotalRounds] = useState<number>(0)
   const [isGameOver, setIsGameOver] = useState<boolean>(false)
@@ -50,6 +53,8 @@ const App = () => {
           setIsGameOver={setIsGameOver}
           setTotalRounds={setTotalRounds}
           totalRounds={totalRounds}
+          pastGuesses={pastGuesses}
+          setPastGuesses={setPastGuesses}
         />
       )
     }
@@ -61,12 +66,25 @@ const App = () => {
           setIsGameOver={setIsGameOver}
           setTotalRounds={setTotalRounds}
           totalRounds={totalRounds}
+          pastGuesses={pastGuesses}
+          setPastGuesses={setPastGuesses}
         />
       )
     }
   }
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setIsReady(true)}
+        onError={(e) => console.log(e)}
+      />
+    )
+  }
+
   return (
-    loaded && (
+    isReady && (
       // Wrapper
       <View style={styles.container}>
         <StatusBar style='inverted' backgroundColor='#00000055' />

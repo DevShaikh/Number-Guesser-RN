@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "2.Number-Guesser",
+    "name": "Number Guesser",
     "slug": "number-guesser",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/devs.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/devs.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/devs.png",
+        "backgroundColor": "#000"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/devs.png"
     }
   }
 }

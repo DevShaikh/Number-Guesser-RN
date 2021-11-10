@@ -17,6 +17,7 @@ import Text from '../styles/Text'
 
 // Theme
 import { colors } from '../styles/theme'
+import ThemeButton from '../styles/ThemeButton'
 
 interface PropTypes {
   setUserNumber: (number: number) => void
@@ -63,10 +64,12 @@ const StartGameScreen = ({ number, setUserNumber }: PropTypes) => {
       <Card style={styles.resultContainer}>
         <Text>You've selected</Text>
         <NumberContainer number={selectedNumber!} />
-        <Button
-          title='Start Game'
+        <ThemeButton
+          theme={colors.primary}
           onPress={() => setUserNumber(selectedNumber!)}
-        />
+        >
+          Start Game
+        </ThemeButton>
       </Card>
     )
   }
@@ -89,18 +92,14 @@ const StartGameScreen = ({ number, setUserNumber }: PropTypes) => {
           />
           <View style={styles.formButtonContainer}>
             <View style={styles.formButton}>
-              <Button
-                title='Reset'
-                onPress={resetForm}
-                color={colors.secondary}
-              />
+              <ThemeButton onPress={resetForm} theme={colors.secondary}>
+                Reset
+              </ThemeButton>
             </View>
             <View style={styles.formButton}>
-              <Button
-                title='Confirm'
-                onPress={submitForm}
-                color={colors.primary}
-              />
+              <ThemeButton onPress={submitForm} theme={colors.primary}>
+                Confirm
+              </ThemeButton>
             </View>
           </View>
         </Card>

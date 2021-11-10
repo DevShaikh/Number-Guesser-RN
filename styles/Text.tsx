@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text as Para } from 'react-native'
 
 interface PropTypes {
-  children: string | number | JSX.Element | JSX.Element[]
+  children: any
   style?: object
 }
 

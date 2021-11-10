@@ -5,16 +5,22 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { Alert, Button, StyleSheet, View } from 'react-native'
+import { Alert, Button, ScrollView, StyleSheet, View } from 'react-native'
+
+import { AntDesign } from '@expo/vector-icons'
 
 import Text from '../styles/Text'
 import Card from '../components/Card'
 import NumberContainer from '../components/NumberContainer'
+import ThemeButton from '../styles/ThemeButton'
+import PastGuessesList from '../components/PastGuessesList'
 
 interface PropTypes {
   setUserNumber: (number: number) => void
   setIsGameOver: React.Dispatch<SetStateAction<boolean>>
   setTotalRounds: React.Dispatch<SetStateAction<number>>
+  setPastGuesses: React.Dispatch<SetStateAction<number[]>>
+  pastGuesses: number[]
   userNumber: number
   totalRounds: number
 }
@@ -39,10 +45,12 @@ const RunningGameScreen = ({
   setIsGameOver,
   setTotalRounds,
   totalRounds,
+  setPastGuesses,
+  pastGuesses,
 }: PropTypes) => {
   // States
-  const [currentGuess, setCurrentGuess] = useState(generateRandomNumber(1, 100))
-  const [rounds, setRounds] = useState(1)
+  const initialGuess = generateRandomNumber(1, 100)
+  const [currentGuess, setCurrentGuess] = useState(initialGuess)
   const currLow = useRef<number>(1)
   const currHigh = useRef<number>(100)
 
@@ -50,9 +58,13 @@ const RunningGameScreen = ({
   useEffect(() => {
     if (currentGuess === userNumber) {
       setIsGameOver(true)
-      setTotalRounds(rounds)
+      setTotalRounds(pastGuesses.length)
     }
   }, [currentGuess, userNumber, setIsGameOver])
+
+  useEffect(() => {
+    setPastGuesses([initialGuess])
+  }, [])
 
   // Guess Again Handler
   const guessAgainHandler = (dir: 'lower' | 'greater') => {
@@ -73,13 +85,18 @@ const RunningGameScreen = ({
       currHigh.current = currentGuess
     }
     if (dir === 'greater') {
-      currLow.current = currentGuess
+      currLow.current = currentGuess + 1
     }
 
-    setCurrentGuess(
-      generateRandomNumber(currLow.current, currHigh.current, currentGuess)
+    const newNumber = generateRandomNumber(
+      currLow.current,
+      currHigh.current,
+      currentGuess
     )
-    setRounds((rounds) => rounds + 1)
+
+    setCurrentGuess(newNumber)
+    // setRounds((rounds) => rounds + 1)
+    setPastGuesses((currArray: number[]) => [newNumber, ...currArray])
   }
 
   return (
@@ -87,12 +104,14 @@ const RunningGameScreen = ({
       <Text style={styles.title}>Opponent's Guest</Text>
       <NumberContainer number={currentGuess} />
       <Card style={styles.buttonsContainer}>
-        <Button title='LOWER' onPress={guessAgainHandler.bind(this, 'lower')} />
-        <Button
-          title='GREATER'
-          onPress={guessAgainHandler.bind(this, 'greater')}
-        />
+        <ThemeButton onPress={guessAgainHandler.bind(this, 'lower')}>
+          <AntDesign name='caretdown' size={24} color='white' />
+        </ThemeButton>
+        <ThemeButton onPress={guessAgainHandler.bind(this, 'greater')}>
+          <AntDesign name='caretup' size={24} color='white' />
+        </ThemeButton>
       </Card>
+      <PastGuessesList list={pastGuesses} />
     </View>
   )
 }
@@ -109,7 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     maxWidth: '80%',
-    width: 200,
+    width: 300,
   },
 })
 
